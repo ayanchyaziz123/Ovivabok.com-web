@@ -1,5 +1,6 @@
 // src/pages/post-job.js
 'use client'
+import Navbar from '@/app/components/Navbar';
 import React, { useState } from 'react';
 
 export default function PostJobPage() {
@@ -18,6 +19,8 @@ export default function PostJobPage() {
   };
 
   return (
+    <div className="container mx-auto flex flex-col min-h-screen">
+      <Navbar/>
     <div className="flex justify-center items-center min-h-screen bg-gray-900">
       <div className="bg-gray-800 p-8 rounded shadow-md w-full max-w-md">
         <h2 className="text-2xl font-bold mb-6 text-center text-white">Post a Job</h2>
@@ -81,6 +84,7 @@ export default function PostJobPage() {
           </button>
         </form>
       </div>
+    </div>
     </div>
   );
 }

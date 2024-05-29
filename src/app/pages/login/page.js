@@ -2,6 +2,7 @@
 'use client'
 import React, { useState } from 'react';
 import Link from 'next/link';
+import Navbar from '@/app/components/Navbar';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
@@ -17,6 +18,8 @@ export default function LoginPage() {
   };
 
   return (
+    <div className="container mx-auto flex flex-col min-h-screen">
+      <Navbar/>
     <div className="flex justify-center items-center min-h-screen bg-gray-900">
       <div className="bg-gray-800 p-8 rounded shadow-md w-full max-w-sm">
         <h2 className="text-2xl font-bold mb-6 text-center text-white">Login</h2>
@@ -64,6 +67,7 @@ export default function LoginPage() {
           </Link>
         </form>
       </div>
+    </div>
     </div>
   );
 }
