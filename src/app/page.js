@@ -1,12 +1,13 @@
 'use client'
 import React, { useState } from 'react';
-import { MdHome, MdWork, MdEvent } from 'react-icons/md';
+import { MdHome, MdWork, MdEvent, MdFavorite } from 'react-icons/md';
 import Link from 'next/link';
 
 const categories = [
   { name: 'Jobs', icon: <MdWork /> },
   { name: 'Housing', icon: <MdHome /> },
   { name: 'Events', icon: <MdEvent /> },
+  { name: 'Matrimony', icon: <MdFavorite /> },
 ];
 
 const posts = {
@@ -34,14 +35,27 @@ const posts = {
     { title: 'Art Exhibition', description: 'Modern art exhibition', location: 'Los Angeles', wage: 'Free' },
     { title: 'Marathon', description: 'City marathon', location: 'Boston', wage: '$100' },
   ],
+  Matrimony: [
+    { title: 'Bride', description: 'Looking for a bride', location: 'San Francisco', wage: 'N/A' },
+    { title: 'Groom', description: 'Looking for a groom', location: 'New York', wage: 'N/A' },
+    { title: 'Matchmaking Event', description: 'Join our matchmaking event', location: 'Los Angeles', wage: 'Free' },
+    { title: 'Online Matrimony Service', description: 'Sign up for online matrimony services', location: 'Chicago', wage: '$100' },
+    { title: 'Marriage Counselor', description: 'Experienced marriage counselor', location: 'Miami', wage: '$70/hour' },
+    { title: 'Wedding Planner', description: 'Professional wedding planner', location: 'Boston', wage: '$2000/event' },
+  ],
 };
 
 export default function Home() {
   const [selectedCategory, setSelectedCategory] = useState('Jobs');
   const [filterLocation, setFilterLocation] = useState('');
+  const [selectedCountry, setSelectedCountry] = useState('USA');
 
   const handleFilterChange = (e) => {
     setFilterLocation(e.target.value);
+  };
+
+  const handleCountryChange = (e) => {
+    setSelectedCountry(e.target.value);
   };
 
   const filteredPosts = posts[selectedCategory].filter((post) =>
@@ -53,11 +67,28 @@ export default function Home() {
       <header className="bg-gray-800 p-4 flex justify-between items-center">
         <h1 className="text-white text-2xl font-bold">Ovivabok.com</h1>
         <div>
-        <Link href="/pages/login">
+          <Link href="/pages/login">
             Login
           </Link>
         </div>
       </header>
+      <div className="bg-gray-200 p-4">
+        <label className="block text-lg font-bold mb-2 text-gray-800">Country:</label>
+        <select
+          value={selectedCountry}
+          onChange={handleCountryChange}
+          className="p-2 border border-gray-300 rounded w-full lg:w-1/3 text-gray-800"
+        >
+          <option value="USA">USA</option>
+          <option value="Canada">Canada</option>
+          <option value="UK">UK</option>
+          <option value="Australia">Australia</option>
+          <option value="Bangladesh">Bangladesh</option>
+          <option value="India">India</option>
+          {/* Add more countries as needed */}
+        </select>
+  
+      </div>
       <div className="flex-1 lg:flex">
         <aside className="w-full lg:w-1/4 bg-gray-800 p-4">
           <ul className="flex lg:flex-col flex-wrap">
@@ -78,7 +109,7 @@ export default function Home() {
           <div className="flex justify-between items-center mb-4">
             <h2 className="text-xl font-bold">{selectedCategory}</h2>
             <Link href="/pages/job/post_job">
-            <button className="bg-blue-500 text-white px-4 py-2 rounded">Post {selectedCategory}</button>
+              <button className="bg-blue-500 text-white px-4 py-2 rounded">Post {selectedCategory}</button>
             </Link>
           </div>
           <div className="mb-4">
