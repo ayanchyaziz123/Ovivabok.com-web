@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { MdHome, MdWork, MdEvent, MdFavorite } from 'react-icons/md';
 import Link from 'next/link';
+import Navbar from './components/Navbar';
 
 const categories = [
   { name: 'Jobs', icon: <MdWork /> },
@@ -64,14 +65,7 @@ export default function Home() {
 
   return (
     <div className="container mx-auto flex flex-col min-h-screen">
-      <header className="bg-gray-800 p-4 flex justify-between items-center">
-        <h1 className="text-white text-2xl font-bold">Ovivabok.com</h1>
-        <div>
-          <Link href="/pages/login">
-            Login
-          </Link>
-        </div>
-      </header>
+      <Navbar/>
       <div className="bg-gray-200 p-4">
         <label className="block text-lg font-bold mb-2 text-gray-800">Country:</label>
         <select
