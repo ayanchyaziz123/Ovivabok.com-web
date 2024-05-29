@@ -54,9 +54,8 @@ export default function Home() {
         <h1 className="text-white text-2xl font-bold">Ovivabok.com</h1>
         <div>
         <Link href="/pages/login">
-            <button className="bg-blue-500 text-white px-4 py-2 mr-2 rounded">Login</button>
+            Login
           </Link>
-          <button className="bg-green-500 text-white px-4 py-2 rounded">Post</button>
         </div>
       </header>
       <div className="flex-1 lg:flex">
