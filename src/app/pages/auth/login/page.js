@@ -65,7 +65,7 @@ export default function Login() {
             >
               Login
             </button>
-            <Link href="/create-account" className="block text-center text-blue-500 hover:underline">
+            <Link href="create_account" className="block text-center text-blue-500 hover:underline">
               Don't have an account? Sign up
             </Link>
           </form>

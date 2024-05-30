@@ -81,7 +81,7 @@ export default function CreateAccountPage() {
           >
             Create account
           </button>
-          <Link href="/login" className="block text-center text-blue-500 hover:underline">
+          <Link href="login" className="block text-center text-blue-500 hover:underline">
             Back to Login
           </Link>
         </form>

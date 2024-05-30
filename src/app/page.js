@@ -1,58 +1,28 @@
 'use client'
 import React, { useState } from 'react';
 import { MdHome, MdWork, MdEvent, MdFavorite } from 'react-icons/md';
-import Link from 'next/link';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
+import JobList from './components/JobList';
+import Link from 'next/link';
 
-
+// import HousingList from './components/HousingList'; // You would need to create this component
+// import EventsList from './components/EventsList'; // You would need to create this component
+import MatrimonyList from './components/MatrimonyList'; // You would need to create this component
 
 const categories = [
-  { name: 'Jobs', icon: <MdWork /> },
-  { name: 'Housing', icon: <MdHome /> },
-  { name: 'Events', icon: <MdEvent /> },
-  { name: 'Matrimony', icon: <MdFavorite /> },
+  { name: 'Jobs', icon: <MdWork />, href:'/pages/jobs/post_job' },
+  { name: 'Matrimony', icon: <MdFavorite />, href:'/pages/matrimony/post_matrimony' },
+  { name: 'Housing', icon: <MdHome />, href:'/pages/Housing/housing' },
+  { name: 'Events', icon: <MdEvent />, href:'/pages/Events/post_event' },
+ 
 ];
-
-const posts = {
-  Jobs: [
-    { id: 1, title: 'Software Engineer', description: 'Looking for a software engineer', location: 'New York', wage: '$120,000/year' },
-    { id: 2, title: 'Server', description: 'Need a server for a restaurant', location: 'Manhattan', wage: '$15.50/hour' },
-    { id: 3, title: 'Graphic Designer', description: 'Creative graphic designer needed', location: 'Los Angeles', wage: '$50,000/year' },
-    { id: 4, title: 'Project Manager', description: 'Experienced project manager', location: 'Chicago', wage: '$85,000/year' },
-    { id: 5, title: 'Data Scientist', description: 'Data scientist with Python skills', location: 'San Francisco', wage: '$130,000/year' },
-    { id: 6, title: 'Marketing Specialist', description: 'Marketing specialist for online campaigns', location: 'Miami', wage: '$60,000/year' },
-  ],
-  Housing: [
-    { id: 7, title: 'Apartment for Rent', description: '2-bedroom apartment in downtown', location: 'San Francisco', wage: '$3,000/month' },
-    { id: 8, title: 'House for Sale', description: '4-bedroom house with garden', location: 'Los Angeles', wage: '$900,000' },
-    { id: 9, title: 'Studio Apartment', description: 'Cozy studio apartment', location: 'New York', wage: '$2,500/month' },
-    { id: 10, title: 'Condo for Sale', description: '3-bedroom condo with amenities', location: 'Miami', wage: '$650,000' },
-    { id: 11, title: 'Townhouse for Rent', description: 'Spacious townhouse', location: 'Boston', wage: '$4,000/month' },
-    { id: 12, title: 'Beach House', description: 'Beautiful beach house', location: 'San Diego', wage: '$5,000/month' },
-  ],
-  Events: [
-    { id: 13, title: 'Concert', description: 'Rock concert in the park', location: 'Chicago', wage: 'Free' },
-    { id: 14, title: 'Workshop', description: 'Photography workshop', location: 'Seattle', wage: '$50' },
-    { id: 15, title: 'Food Festival', description: 'Annual food festival', location: 'New York', wage: 'Free' },
-    { id: 16, title: 'Tech Conference', description: 'Leading tech conference', location: 'San Francisco', wage: '$300' },
-    { id: 17, title: 'Art Exhibition', description: 'Modern art exhibition', location: 'Los Angeles', wage: 'Free' },
-    { id: 18, title: 'Marathon', description: 'City marathon', location: 'Boston', wage: '$100' },
-  ],
-  Matrimony: [
-    { id: 19, title: 'Bride', description: 'Looking for a bride', location: 'San Francisco', wage: 'N/A' },
-    { id: 20, title: 'Groom', description: 'Looking for a groom', location: 'New York', wage: 'N/A' },
-    { id: 21, title: 'Matchmaking Event', description: 'Join our matchmaking event', location: 'Los Angeles', wage: 'Free' },
-    { id: 22, title: 'Online Matrimony Service', description: 'Sign up for online matrimony services', location: 'Chicago', wage: '$100' },
-    { id: 23, title: 'Marriage Counselor', description: 'Experienced marriage counselor', location: 'Miami', wage: '$70/hour' },
-    { id: 24, title: 'Wedding Planner', description: 'Professional wedding planner', location: 'Boston', wage: '$2000/event' },
-  ],
-};
 
 export default function Home() {
   const [selectedCategory, setSelectedCategory] = useState('Jobs');
   const [filterLocation, setFilterLocation] = useState('');
   const [selectedCountry, setSelectedCountry] = useState('USA');
+  const [href, setHref] = useState('/pages/jobs/post_job')
 
   const handleFilterChange = (e) => {
     setFilterLocation(e.target.value);
@@ -62,13 +32,29 @@ export default function Home() {
     setSelectedCountry(e.target.value);
   };
 
-  const filteredPosts = posts[selectedCategory].filter((post) =>
-    post.location.toLowerCase().includes(filterLocation.toLowerCase())
-  );
+  const handleCategoryClick = (category) => {
+    setSelectedCategory(category.name);
+    setHref(category.href);
+  };
+
+  const renderCategoryList = () => {
+    switch (selectedCategory) {
+      case 'Jobs':
+        return <JobList filterLocation={filterLocation} />;
+      // case 'Housing':
+      //   return <HousingList filterLocation={filterLocation} />;
+      // case 'Events':
+      //   return <EventsList filterLocation={filterLocation} />;
+      case 'Matrimony':
+        return <MatrimonyList filterLocation={filterLocation} />;
+      default:
+        return null;
+    }
+  };
 
   return (
     <div className="container mx-auto flex flex-col min-h-screen">
-      <Navbar/>
+      <Navbar />
       <div className="bg-gray-200 p-4">
         <label className="block text-lg font-bold mb-2 text-gray-800">Country:</label>
         <select
@@ -92,7 +78,7 @@ export default function Home() {
               <li key={category.name} className="w-1/2 lg:w-full mb-2">
                 <button
                   className={`flex items-center p-2 w-full text-left text-white ${selectedCategory === category.name ? 'bg-gray-400' : ''}`}
-                  onClick={() => setSelectedCategory(category.name)}
+                  onClick={() => handleCategoryClick(category)}
                 >
                   <span className="mr-2">{category.icon}</span>
                   {category.name}
@@ -104,7 +90,7 @@ export default function Home() {
         <main className="flex-1 p-4">
           <div className="flex justify-between items-center mb-4">
             <h2 className="text-xl font-bold">{selectedCategory}</h2>
-            <Link href="/pages/jobs/post_job">
+            <Link href={href}>
               <button className="bg-blue-500 text-white px-4 py-2 rounded">Post {selectedCategory}</button>
             </Link>
           </div>
@@ -117,23 +103,10 @@ export default function Home() {
               className="p-2 border border-gray-300 rounded w-full lg:w-1/3 text-gray-800"
             />
           </div>
-          <ul>
-            {filteredPosts.map((post) => (
-              <li key={post.id} className="mb-4 p-4 bg-white shadow rounded text-gray-800">
-                <Link href={`/pages/jobs/${post.id}`}>
-                  
-                    <h3 className="text-lg font-bold">{post.title}</h3>
-                    <p>{post.description}</p>
-                    <p className="text-gray-600">{post.location}</p>
-                    <p className="text-gray-600">{post.wage}</p>
-                  
-                </Link>
-              </li>
-            ))}
-          </ul>
+          {renderCategoryList()}
         </main>
       </div>
-      <Footer/>
+      <Footer />
     </div>
   );
 }
